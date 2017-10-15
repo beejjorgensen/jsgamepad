@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>JavaScript Gamepad Demo</title>
+	<link rel="stylesheet" type="text/css" href="gpcon.css">
+	<script type="text/javascript" src="libhtml.js"></script>
+	<script type="text/javascript" src="libgp.js"></script>
+	<script type="text/javascript" src="gpcon.js"></script>
+</head>
+
+<body>
+	<div id="sol" class="nodisp">Gamepads don't appear to be supported
+	on this browser.  Bummer.</div>
+
+	<div id="prompt" class="nodisp">Attach a gamepad or press a gamepad
+	button</div>
+
+	<div id="main" class="nodisp">
+		<div id="button-bar">
+			<span class="button-bar-title">Gamepad: </span>
+			<span id="button-bar-box"></span>
+		</div>
+
+        <div id="mode-select-box">
+			Mode
+			<select id="mode-select">
+				<option selected="selected" value="raw">Raw</option>
+				<option value="clamp">Clamped</option>
+			</select>
+		</div>
+
+		<div id="deadzone-box">
+			Deadzone
+			<input type="checkbox" id="deadzone">
+		</div>
+
+		<hr>
+
+		<div id="gamepad-container">
+		</div>
+	</div>
+
+	<!-- Templates are copied for use when needed -->
+	<div id="templates">
+		<input id="template-button" type="button" class="selector-button">
+
+		<div id="template-gamepad" class="gamepad nodisp">
+			<div class="gamepad-title"></div>
+			(<div class="gamepad-mapping"></div>)
+			<div class="gamepad-id"></div>
+			<div class="gamepad-controls-center">
+				<div class="gamepad-controls">
+					<div class="gamepad-buttons-box"></div>
+					<div class="gamepad-axes-box"></div>
+				</div>
+			</div>
+		</div>
+
+		<div id="template-gamepad-button-container" class="gamepad-button-container">
+			<div class="gamepad-button"></div>
+			<div class="gamepad-button-label"></div>
+		</div>
+
+		<div id="template-gamepad-axis-pair-container" class="gamepad-axis-pair-container">
+			<div class="gamepad-axis-pair">
+				<div class="gamepad-circle nodisp"></div>
+				<div class="gamepad-axis-pip"></div>
+				<div class="gamepad-axis-crosshair">
+					<div class="gamepad-axis-crosshair-v"></div>
+					<div class="gamepad-axis-crosshair-h"></div>
+				</div>
+			</div>
+			<div class="gamepad-axis-pair-label"></div>
+			<div class="gamepad-axis-pair-value"></div>
+		</div>
+	</div>
+
+</body>
+</html>
