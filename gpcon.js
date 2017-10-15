@@ -177,7 +177,7 @@
 	 */
 	 function updateUI() {
 
-        // Format a number value to a string
+		// Format a number value to a string
 		function format(v) {
 			if (v < 0) { // -0.123456
 				 return (""+v).substr(0,5); // -0.12
@@ -199,7 +199,7 @@
 			if (!gp || !gp.connected) { continue; }
 
 			let gpElem = qs("#gamepad-" + i);
-            
+			
 			// Show button values
 			let buttonBox = qs(".gamepad-buttons-box", gpElem);
 
@@ -207,10 +207,10 @@
 				let buttonElem = qs("#gamepad-" + i + "-button-" + j, buttonBox)
 				let button = gp.buttons[j];
 
-                // Put the value in there
+				// Put the value in there
 				buttonElem.innerHTML = button.value;
 
-                // Change color if pressed or not
+				// Change color if pressed or not
 				if (button.pressed) {
 					buttonElem.classList.add("pressed");
 				} else {
@@ -245,7 +245,7 @@
 				// Position the pip over the raw indicator for now
 				axisPip.style.left = axisCross.style.left;
 
-                // If we're not a single axis in the last box, show the second axis in this box.
+				// If we're not a single axis in the last box, show the second axis in this box.
 				// This handles a last box with a single axis (odd number of axes total).
 				if (!(j == axesBoxCount - 1 && gp.axes.length % 2 == 1)) {
 					valueY = gp.axes[j*2+1];
@@ -253,11 +253,11 @@
 					if (deadzoneActive) {
 						valueY = gpLib.deadzone(valueY);
 					}
-                    
+					
 					// Set the value label
 					valueStr += ',' + format(valueY);
 
-                    // Position the raw indicator
+					// Position the raw indicator
 					axisCross.style.left = (valueX + 1) / 2 * 100 + '%';
 					axisCross.style.top = (valueY + 1) / 2 * 100 + '%';
 
@@ -296,15 +296,15 @@
 	function onFrame() {
 		let conCheck = gpLib.testForConnections();
 
-        // Check for connection or disconnection
+		// Check for connection or disconnection
 		if (conCheck) {
 			console.log(conCheck + " new connections");
 
-            // And reconstruct the UI if it happened
+			// And reconstruct the UI if it happened
 			rebuildUI();
 		}
 
-        // Update all the UI elements
+		// Update all the UI elements
 		updateUI();
 
 		requestAnimationFrame(onFrame);
