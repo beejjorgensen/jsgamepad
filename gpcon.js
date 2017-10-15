@@ -177,16 +177,6 @@
 	 */
 	 function updateUI() {
 
-		// Format a number value to a string
-		function format(v) {
-			if (v < 0) { // -0.123456
-				 return (""+v).substr(0,5); // -0.12
-			}
-
-			// 0.1234567
-			return ("+"+v).substr(0,4); // +0.12
-		}
-
 		let gamepads = navigator.getGamepads();
 
 		let mode = qs("#mode-select").value; // raw, norm, clamp
@@ -237,7 +227,7 @@
 				}
 
 				// Set the value label
-				valueStr = format(valueX);
+				valueStr = valueX.toFixed(2);
 
 				// Position the raw indicator
 				axisCross.style.left = (valueX + 1) / 2 * 100 + '%';
@@ -255,7 +245,7 @@
 					}
 					
 					// Set the value label
-					valueStr += ',' + format(valueY);
+					valueStr += ',' + valueY.toFixed(2);
 
 					// Position the raw indicator
 					axisCross.style.left = (valueX + 1) / 2 * 100 + '%';
@@ -274,7 +264,7 @@
 						clampCircle.classList.remove("nodisp");
 
 						// Overwrite the value string with clamped values
-						valueStr = format(clampX) + ',' + format(clampY);
+						valueStr = clampX.toFixed(2) + ',' + clampY.toFixed(2);
 
 					} else {
 						// Raw
