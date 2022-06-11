@@ -67,27 +67,30 @@ gpLib = (function () {
 	}
 
 	/**
-	 * Given a gamepad axis value, normalize it so there's a deadzone 
+	 * Given a 2D gamepad axis value, normalize it so there's a deadzone 
 	 * 
-	 * Run independently on X and Y axes.
+	 * @param {Number} x The x axis value
+	 * @param {Number} y The y axis value
 	 * 
-	 * @param {Number} v 
-	 * 
-	 * @return {Number} The deadzone value of the axis
+	 * @return [{Number},{Number}] The deadzone value of the axis
 	 */
-	function deadzone(v) {
+	function deadzone(x, y) {
 		const DEADZONE = 0.2;
 
-		if (Math.abs(v) < DEADZONE) {
-			v = 0;
-		} else {
-			// Smooth
-			v = v - Math.sign(v) * DEADZONE;
-			v /= (1.0 - DEADZONE);
-		}
+        let m = Math.sqrt(x*x + y*y);
 
-		return v;
-	}
+        if (m < DEADZONE)
+            return [0, 0];
+
+        let over = m - DEADZONE;  // 0 -> 1 - DEADZONE
+        let nover = over / (1 - DEADZONE);  // 0 -> 1
+
+        let nx = x / m;
+        let ny = y / m;
+
+        return [nx * nover, ny * nover];
+        
+    }
 
 	// Exports
 	return {

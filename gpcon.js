@@ -222,62 +222,57 @@
 
 				valueX = gp.axes[j*2];
 
+                // If we're not a single axis in the last box, show the
+                // second axis in this box. This handles a last box with
+                // a single axis (odd number of axes total).
+                let last_odd_axis = j == axesBoxCount - 1 && gp.axes.length % 2 == 1;
+
+                valueY = last_odd_axis? 0: gp.axes[j*2 + 1];
+
 				if (deadzoneActive) {
-					valueX = gpLib.deadzone(valueX);
+					[valueX, valueY] = gpLib.deadzone(valueX, valueY);
 				}
 
 				// Set the value label
 				valueStr = valueX.toFixed(2);
 
-				// Position the raw indicator
-				axisCross.style.left = (valueX + 1) / 2 * 100 + '%';
-
-				// Position the pip over the raw indicator for now
-				axisPip.style.left = axisCross.style.left;
-
-				// If we're not a single axis in the last box, show the second axis in this box.
-				// This handles a last box with a single axis (odd number of axes total).
-				if (!(j == axesBoxCount - 1 && gp.axes.length % 2 == 1)) {
-					valueY = gp.axes[j*2+1];
-
-					if (deadzoneActive) {
-						valueY = gpLib.deadzone(valueY);
-					}
-					
-					// Set the value label
+                if (!last_odd_axis)
 					valueStr += ',' + valueY.toFixed(2);
 
-					// Position the raw indicator
-					axisCross.style.left = (valueX + 1) / 2 * 100 + '%';
-					axisCross.style.top = (valueY + 1) / 2 * 100 + '%';
+				// Position the raw indicator
+				axisCross.style.left = (valueX + 1) / 2 * 100 + '%';
+                axisCross.style.top = (valueY + 1) / 2 * 100 + '%';
 
-					// Position the pip, clamping if necessary
-					let clampCircle = qs(".gamepad-circle", axisPairContainer);
+                // Position the pip, clamping if necessary
+                let clampCircle = qs(".gamepad-circle", axisPairContainer);
 
-					if (mode == 'clamp') {
-						// Clamp
-						let clampX, clampY;
-						[clampX, clampY] = gpLib.clamp(valueX, valueY, mode);
-						axisPip.style.left = (clampX + 1) / 2 * 100 + '%';
-						axisPip.style.top = (clampY + 1) / 2 * 100 + '%';
+                if (mode == 'clamp') {
+                    // Clamp
+                    let clampX, clampY;
+                    [clampX, clampY] = gpLib.clamp(valueX, valueY, mode);
+                    axisPip.style.left = (clampX + 1) / 2 * 100 + '%';
+                    axisPip.style.top = (clampY + 1) / 2 * 100 + '%';
 
-						clampCircle.classList.remove("nodisp");
+                    clampCircle.classList.remove("nodisp");
 
-						// Overwrite the value string with clamped values
-						valueStr = clampX.toFixed(2) + ',' + clampY.toFixed(2);
+                    // Overwrite the value string with clamped values
+                    valueStr = clampX.toFixed(2)
 
-					} else {
-						// Raw
-						axisPip.style.left = axisCross.style.left;
-						axisPip.style.top = axisCross.style.top;
+                    if (!last_odd_axis)
+                        valueStr += ',' + clampY.toFixed(2);
 
-						clampCircle.classList.add("nodisp");
-					}
-				}
+                } else {
+                    // Raw
+                    axisPip.style.left = axisCross.style.left;
+                    axisPip.style.top = axisCross.style.top;
 
+                    clampCircle.classList.add("nodisp");
+                }
+
+                // Show coordinates
 				axisPairValue.innerHTML = valueStr;
-			}
-		}
+            }
+        }
 	 }
 
 	/**
