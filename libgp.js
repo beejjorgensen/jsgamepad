@@ -71,19 +71,18 @@ gpLib = (function () {
      * 
      * @param {Number} x The x axis value
      * @param {Number} y The y axis value
+     * @param {Number} deadzone [optional] The deadzone radius, 0 to 0.999
      * 
      * @return [{Number},{Number}] The deadzone value of the axis
      */
-    function deadzone(x, y) {
-        const DEADZONE = 0.2;
-
+    function deadzone(x, y, deadzone=0.2) {
         let m = Math.sqrt(x*x + y*y);
 
-        if (m < DEADZONE)
+        if (m < deadzone)
             return [0, 0];
 
-        let over = m - DEADZONE;  // 0 -> 1 - DEADZONE
-        let nover = over / (1 - DEADZONE);  // 0 -> 1
+        let over = m - deadzone;  // 0 -> 1 - DEADZONE
+        let nover = over / (1 - deadzone);  // 0 -> 1
 
         let nx = x / m;
         let ny = y / m;
